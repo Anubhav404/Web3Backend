@@ -128,36 +128,36 @@ def add_post(
 
 
 # def create_certificate(account, metadata):
-    print("minting NFT...")
-    print(w3.isConnected())
-    nonce = w3.eth.get_transaction_count(public_key)
-    print(f"nonce = {nonce}")
-    try:
-        print("trying....")
-        createCertificate_tx = myContract.functions.createCertificate(
-            metadata, account
-        ).build_transaction({"from": public_key, "nonce": nonce})
-        print("Built transaction...")
-        signed_transaction = w3.eth.account.sign_transaction(
-            createCertificate_tx, private_key=private_key
-        )
-        print("Signed transaction transaction...")
-        tx_data = w3.eth.send_raw_transaction(
-            signed_transaction.rawTransaction)
-    except:
-        print("excepting...")
-        createCertificate_tx = myContract.functions.createCertificate(
-            metadata, account
-        ).build_transaction({"from": public_key, "nonce": nonce + 1})
-        print("Built transaction...")
-        signed_transaction = w3.eth.account.sign_transaction(
-            createCertificate_tx, private_key=private_key
-        )
-        print("Signed transaction transaction...")
-        tx_data = w3.eth.send_raw_transaction(
-            signed_transaction.rawTransaction)
-    # receipt = w3.eth.wait_for_transaction_receipt(tx_data)
-    print("transaction sent...")
-    token_id = myContract.functions.tokenCounter().call()
-    print(token_id)
-    return (token_id, tx_data.hex())
+    # print("minting NFT...")
+    # print(w3.isConnected())
+    # nonce = w3.eth.get_transaction_count(public_key)
+    # print(f"nonce = {nonce}")
+    # try:
+    #     print("trying....")
+    #     createCertificate_tx = myContract.functions.createCertificate(
+    #         metadata, account
+    #     ).build_transaction({"from": public_key, "nonce": nonce})
+    #     print("Built transaction...")
+    #     signed_transaction = w3.eth.account.sign_transaction(
+    #         createCertificate_tx, private_key=private_key
+    #     )
+    #     print("Signed transaction transaction...")
+    #     tx_data = w3.eth.send_raw_transaction(
+    #         signed_transaction.rawTransaction)
+    # except:
+    #     print("excepting...")
+    #     createCertificate_tx = myContract.functions.createCertificate(
+    #         metadata, account
+    #     ).build_transaction({"from": public_key, "nonce": nonce + 1})
+    #     print("Built transaction...")
+    #     signed_transaction = w3.eth.account.sign_transaction(
+    #         createCertificate_tx, private_key=private_key
+    #     )
+    #     print("Signed transaction transaction...")
+    #     tx_data = w3.eth.send_raw_transaction(
+    #         signed_transaction.rawTransaction)
+    # # receipt = w3.eth.wait_for_transaction_receipt(tx_data)
+    # print("transaction sent...")
+    # token_id = myContract.functions.tokenCounter().call()
+    # print(token_id)
+    # return (token_id, tx_data.hex())

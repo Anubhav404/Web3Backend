@@ -14,4 +14,7 @@ urlpatterns = [
     path('createPost', views.create_post),
     path('getMyPosts', views.get_my_posts),
     path('getMyClubs', views.get_my_clubs),
+    path('createComment', views.create_comment),
+    path('getPostComments', views.get_post_comments),
+    path('PostLike/<int:pk>', views.PostLike),
 ]

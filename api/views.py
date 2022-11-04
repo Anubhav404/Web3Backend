@@ -2,12 +2,12 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.forms.models import model_to_dict
-
+from django.shortcuts import get_object_or_404, render, redirect
 
 from .tools import ipfs_upload
 from .contractcalls import add_user, add_club, add_post
 
-from .models import Club, User, Post
+from .models import Club, User, Post, Comment
 
 # Create your views here.
 
@@ -151,6 +151,7 @@ def create_post(request):
     Post.objects.create(content=content, club=clubId, posted_by=posted_by)
     return Response({"status": "Success"})
 
+
 @api_view(["POST"])
 def get_my_posts(request):
     account = request.data["account"]
@@ -169,3 +170,38 @@ def get_my_clubs(request):
     for club in clubs:
         myclubs.append(model_to_dict(club))
     return Response({"status": "Success", "data": myclubs})
+
+
+@api_view(["POST"])
+def create_comment(request):
+    clubId = int(request.data["clubId"])
+    postId = int(request.data["postId"])
+    commented_by = request.data["commented_by"]
+    comment = request.data['comment']
+    Comment.objects.create(club=clubId, postId=postId,
+                           commented_by=commented_by, comment=comment)
+    return Response({"status": "Success"})
+
+
+@api_view(["POST"])
+def get_post_comments(request):
+    clubId = request.data["clubId"]
+    postId = request.data["postId"]
+    comments = list(comments.objects.filter(clubId=clubId, postId=postId))
+
+    comment_data = []
+
+    for comment in comments:
+        mycomment = model_to_dict(comment)
+        comment_data.append(mycomment)
+    return Response({"status": "Success", "data": comment_data})
+
+
+def PostLike(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    if post.likes.filter(id=pk).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+
+    return Response({"status": "Success"})
