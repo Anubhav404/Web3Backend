@@ -178,7 +178,7 @@ def create_comment(request):
     postId = int(request.data["postId"])
     commented_by = request.data["commented_by"]
     comment = request.data['comment']
-    Comment.objects.create(club=clubId, postId=postId,
+    Comment.objects.create(clubId=clubId, postId=postId,
                            commented_by=commented_by, comment=comment)
     return Response({"status": "Success"})
 
@@ -187,7 +187,8 @@ def create_comment(request):
 def get_post_comments(request):
     clubId = request.data["clubId"]
     postId = request.data["postId"]
-    comments = list(comments.objects.filter(clubId=clubId, postId=postId))
+    
+    comments = list(Comment.objects.filter(clubId=clubId, postId=postId))
 
     comment_data = []
 

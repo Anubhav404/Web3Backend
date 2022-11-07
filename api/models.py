@@ -35,5 +35,5 @@ class Comment(models.Model):
     comment = models.TextField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        ordering = ['created']
+    # class Meta:
+    #     ordering = ['created']
